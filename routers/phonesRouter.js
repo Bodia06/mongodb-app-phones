@@ -8,4 +8,10 @@ phonesRouter
   .get(phonesControllers.getPhones)
   .post(phonesControllers.createPhone);
 
+phonesRouter
+  .route('/:id')
+  .get(phonesControllers.getPhoneById)
+  .patch(phonesControllers.updatePhoneById)
+  .delete(phonesControllers.deletePhoneById);
+
 module.exports = phonesRouter;
