@@ -40,7 +40,7 @@ module.exports.getPhoneById = async (req, res, next) => {
   const { id } = req.params;
 
   try {
-    const foundPhone = Phone.findById(id);
+    const foundPhone = await Phone.findById(id);
 
     if (!foundPhone) {
       return next(createHttpError(404, 'Phone not found'));
@@ -54,9 +54,13 @@ module.exports.getPhoneById = async (req, res, next) => {
 
 module.exports.updatePhoneById = async (req, res, next) => {
   const { id } = req.params;
+  const { body } = req;
 
   try {
-    const updatedPhone = await Phone.findByIdAndUpdate(id, body, { new: true });
+    const updatedPhone = await Phone.findByIdAndUpdate(id, body, {
+      new: true,
+      runValidators: true,
+    });
 
     if (!updatedPhone) {
       return next(createHttpError(404, 'Phone not found'));
